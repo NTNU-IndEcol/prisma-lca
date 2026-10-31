@@ -1,0 +1,492 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    position: relative;
+}
+body {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    background: #1e2024;
+    color: #fff;
+}
+body::after {
+    content: "";
+    display: block;
+    height: 60px;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    align-items: center;
+    background: #29828a;
+    display: flex;
+    border-radius: 7px;
+    opacity: 1;
+    gap: 1rem;
+}
+
+.footer-graphics {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 5px;
+}
+
+.footer-graphics img {
+    height: 40px;
+    width: auto;
+}
+
+.footer-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    font-size: 14px;
+    height: 40px;
+}
+
+#interactive-content-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    background-color: #9fa647;
+    border: #fff;
+    color: #ffffff;
+    font-size: 15px;
+    width: 50%;
+    margin: 1px;
+    border-radius: 5px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #29828a;
+}
+
+.btn:disabled {
+    background-color: #484a32;
+}
+
+.select-misc {
+    width: 60%;
+    background-color: #295d8a;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 15px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.select-misc:hover {
+    background-color: #29828a;
+}
+
+.lookup-misc {
+    background-color: #141516;
+    border: 1px solid #29828a;
+    color: #fff;
+    font-size: 15px;
+    height: 35px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.lookup-misc:hover {
+    background-color: #29828a;
+}
+
+.ref2 {
+    padding-right: 30px;
+}
+
+/*=================== control panel ================== */
+
+#control-panel-container {
+    width: 25%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+#logoimg {
+    height: 60px;
+    padding-right: 20px;
+}
+
+#ttl {
+    display: flex;
+
+    align-items: center;
+    padding-right: 20px;
+}
+
+#extref-container {
+    display: flex;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
+#compute-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+#compute-btn {
+    height: 50px;
+    font-size: 18px;
+}
+
+#scenario-selector {
+    align-items: center;
+}
+
+#selectedScenarios {
+    background-color: #1e2024;
+    border: 1px solid #37abb5;
+    border-radius: 7px;
+    max-height: 200px;
+    overflow: scroll;
+}
+
+#selectedScenarios scenarioitem {
+    display: list-item;
+}
+
+scenarioitem {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px;
+}
+scenarioitem:hover {
+    background-color: #29828a;
+}
+scenarioitem:hover::before {
+    content: "❌ ";
+}
+
+#addScenario-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#addscenario-btn {
+    width: 60%;
+    margin-bottom: 5px;
+}
+
+#scenarioMenu {
+    text-align: right;
+    width: 100%;
+}
+
+.lcia-select-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#log-component {
+    overflow: scroll;
+    width: 100%;
+    max-height: 200px;
+}
+
+/*=================== inventory-results container ================== */
+
+#inventory-results-container {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+/*========== activity lookup ==========*/
+
+#lookup-container {
+    flex: 1;
+    max-width: 99%;
+}
+
+#lookup-param-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#activity-lookup-matrix {
+    width: 19%;
+}
+
+#activity-lookup-location {
+    width: 10%;
+}
+
+#activity-lookup-unit {
+    width: 10%;
+}
+
+#activity-lookup-name {
+    width: 79%;
+}
+
+#select-activity {
+    width: 100%;
+    display: none;
+    overflow: scroll;
+    background-color: #262626;
+    border: 1px solid #37abb5;
+    color: #fff;
+    cursor: pointer;
+}
+
+#no-activity-message {
+    display: none;
+}
+
+/*========== fg inv management ==========*/
+
+#inventory-container {
+    display: block;
+    flex: 1;
+    height: 30%;
+    max-width: 99%;
+    margin-bottom: 10px;
+}
+
+#inventory-selector {
+    display: flex;
+    align-items: center;
+}
+
+#inventory-type-select {
+    width: 10%;
+    height: 35px;
+    margin: 0px;
+    margin-left: 10px;
+}
+
+#inventory-table {
+    max-height: 80%;
+    border-radius: 7px;
+}
+
+#inventory-footer {
+    display: flex;
+}
+#inventory-control {
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+}
+#inventory-row-control {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+#inventory-exchange-control {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+#inventory-amount-control {
+    position: absolute;
+    align-items: center;
+    width: 25%;
+    margin-left: 20px;
+}
+
+#select-year {
+    width: 50%;
+    margin-bottom: 0px;
+}
+
+.tabulator-amount-header :hover {
+    background-color: #29828a;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #9fa647;
+    width: 100%;
+    height: 100%;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #29828a;
+}
+
+/*========== lcia results chart ==========*/
+
+#results-container {
+    display: block;
+    max-width: 99%;
+    height: 50%;
+}
+
+#chart-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#chart-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    align-items: flex-start;
+}
+
+#export-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    display: hidden;
+    flex-direction: column;
+    gap: 6px;
+    background-color: #1e2024;
+    border: 1px solid #29828a;
+    border-radius: 6px;
+    padding: 8px;
+    min-width: 140px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.export-option {
+    background-color: #9fa647;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.export-option:hover {
+    background-color: #29828a;
+}
+
+#export-btn {
+    width: auto;
+    min-width: 200px;
+    padding: 0 16px;
+}
+
+/*================ misc ====================== */
+
+a:link,
+a:visited {
+    color: white;
+    text-decoration: underline;
+    cursor: auto;
+}
+
+a:link:active,
+a:visited:active {
+    color: gray;
+}
+
+ul {
+    padding-left: 0;
+}
+
+#loader-container {
+    display: none;
+    text-align: center;
+}
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    opacity: 0.5;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #29828a;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s;
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0;
+    }
+    to {
+        bottom: 0px;
+        opacity: 1;
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0;
+    }
+    to {
+        bottom: 0;
+        opacity: 1;
+    }
+}

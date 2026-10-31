@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>PRISMA LCA</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/prism.svg" />
+        <link href="assets/css/stl.css" rel="stylesheet" />
+        <link href="assets/css/tabulator_site_dark.css" rel="stylesheet" />
+        <script type="module" src="app.js"></script>
+        <script type="module" src="scenariocontrol.js"></script>
+        <script type="module" src="lookupcontrol.js"></script>
+        <script type="module" src="inventorycontrol.js"></script>
+    </head>
+
+    <body>
+        <div id="interactive-content-container">
+            <div id="control-panel-container">
+                <div id="ttl">
+                    <div id="logo">
+                        <img src="assets/img/prism.svg" alt="logo" id="logoimg" />
+                    </div>
+                    <h1>PRISMA LCA</h1>
+                </div>
+                <div id="extref-container">
+                    <div id="ref2gh-container">
+                        <a
+                            id="ghref"
+                            class="ref2"
+                            target="_blank"
+                            href="https://github.com/NTNU-IndEcol/prisma-lca"
+                        >
+                            GitHub 📚↗️
+                        </a>
+                    </div>
+                    <div id="ref2docs-container">
+                        <a
+                            id="docref"
+                            class="ref2"
+                            target="_blank"
+                            href="https://docs.prisma.indecol.no"
+                        >
+                            Documentation 📚↗️
+                        </a>
+                    </div>
+                </div>
+                <div id="compute-container">
+                    <button id="compute-btn" class="btn">
+                        <span>Compute!</span>
+                    </button>
+                </div>
+                <div id="scenario-selector">
+                    <h3>Scenario selector</h3>
+                    <ul id="selectedScenarios"></ul>
+                    <div id="addScenario-container">
+                        <button id="addscenario-btn" class="btn">
+                            Add scenario(s)
+                        </button>
+                        <div id="scenarioMenu" class="hidden"></div>
+                    </div>
+                </div>
+                <div id="lcia-setups">
+                    <h3>LCIA setups</h3>
+                    <div id="method-container" class="lcia-select-container">
+                        <label for="select-method">Method:</label>
+                        <select id="select-method" class="select-misc"></select>
+                    </div>
+                    <div id="category-container" class="lcia-select-container">
+                        <label for="select-category">Category:</label>
+                        <select
+                            id="select-category"
+                            class="select-misc"
+                        ></select>
+                    </div>
+                    <div id="impact-container" class="lcia-select-container">
+                        <label for="select-impact">Indicator:</label>
+                        <select id="select-impact" class="select-misc"></select>
+                    </div>
+                </div>
+                <div id="view-setups">
+                    <h3>Views</h3>
+                    <div id="view-container" class="lcia-select-container">
+                        <label for="select-aggview">Aggregation:</label>
+                        <select id="select-aggview" class="select-misc">
+                            <option value="detailed:emissions" selected>
+                                detailed:emissions
+                            </option>
+                            <option value="detailed:processes">
+                                detailed:processes
+                            </option>
+                            <option value="aggregated:time series">
+                                aggregated:time series
+                            </option>
+                            <option value="aggregated:statistics">
+                                aggregated:statistics
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div id="log-component"></div>
+            </div>
+            <div id="inventory-results-container">
+                <div id="lookup-container">
+                    <h2>Activity lookup</h2>
+                    <div id="lookup-param-container">
+                        <select id="activity-lookup-matrix" class="select-misc">
+                            <option value="technosphere" selected>
+                                techno
+                            </option>
+                            <option value="biosphere">bio</option>
+                        </select>
+                        <input
+                            id="activity-lookup-location"
+                            class="lookup-misc"
+                            type="text"
+                            placeholder="Location"
+                            autocomplete="off"
+                        />
+                        <input
+                            id="activity-lookup-unit"
+                            class="lookup-misc"
+                            type="text"
+                            placeholder="Unit"
+                            autocomplete="off"
+                        />
+                        <input
+                            id="activity-lookup-name"
+                            class="lookup-misc"
+                            type="text"
+                            placeholder="Name"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <select id="select-activity" class="select-misc"></select>
+                    <h3 id="no-activity-message">...no such activity 😐️</h3>
+                </div>
+                <div id="inventory-container">
+                    <div id="inventory-selector">
+                        <h2>Foreground inventory</h2>
+                        <select id="inventory-type-select" class="select-misc">
+                            <option selected>static</option>
+                            <option>dynamic</option>
+                        </select>
+                    </div>
+                    <div id="inventory-table"></div>
+                </div>
+                <div id="inventory-footer">
+                    <div id="inventory-control">
+                        <div id="inventory-row-control">
+                            <button id="inv-addrow-btn" class="btn">
+                                <span>Append a row</span>
+                            </button>
+                            <button id="inv-delrow-btn" class="btn">
+                                <span>Del active row</span>
+                            </button>
+                        </div>
+                        <div id="inventory-exchange-control">
+                            <button id="inv-upload-btn" class="btn">
+                                <span>Upload inventory</span>
+                            </button>
+                            <input
+                                type="file"
+                                id="inv-upload-input"
+                                class="hidden btn"
+                                accept=".csv"
+                            />
+                            <button id="inv-download-btn" class="btn">
+                                <span>Download inventory</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="inventory-amount-control" class="hidden">
+                        <div>
+                            <button id="inv-addamount-btn" class="btn"></button>
+                            <select
+                                id="select-year"
+                                class="hidden select-misc"
+                            ></select>
+                        </div>
+                        <button id="inv-delamount-btn" class="btn"></button>
+                    </div>
+                </div>
+                <div id="results-container">
+                    <div id="chart-container">
+                        <h2>LCIA results</h2>
+                        <canvas id="lcia-chart"></canvas>
+                        <div id="chart-actions">
+                            <button id="export-btn" class="btn hidden" disabled>
+                                <span>Export results</span>
+                            </button>
+                            <div id="export-menu" class="hidden">
+                                <button class="export-option" data-format="png">
+                                    .png
+                                </button>
+                                <button class="export-option" data-format="svg">
+                                    .svg
+                                </button>
+                                <button class="export-option" data-format="csv">
+                                    .csv
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="loader-container">
+            <div id="loader"></div>
+        </div>
+    </body>
+    <footer>
+        <div class="footer-graphics">
+            <a href="https://lca4bioproject.eu/" target="_blank" rel="noopener">
+                <img
+                    src=assets/img/lca4bio-logo.png
+                    alt="LCA4Bio-logo"
+                />
+            </a>
+            <a
+                href="https://european-union.europa.eu/"
+                target="_blank"
+                rel="noopener"
+            >
+                <img
+                    src=assets/img/EU-fundedby.png
+                    alt="EU-logo"
+                />
+            </a>
+        </div>
+        <div class="footer-text"></div>
+        <div class="footer-graphics">
+            <a href="https://www.ntnu.no/" target="_blank" rel="noopener"
+                ><img
+                    src=assets/img/ntnu-logo.png
+                    alt="ntnu-logo"
+            /></a>
+            <a
+                href="https://www.ntnu.edu/indecol"
+                target="_blank"
+                rel="noopener"
+                ><img
+                    src=assets/img/indecol-logo.png
+                    alt="indecol-logo"
+            /></a>
+            <a href="https://iedl.no/" target="_blank" rel="noopener"
+                ><img
+                    src=assets/img/iedl-logo.png
+                    alt="iedl-logo"
+            /></a>
+        </div>
+    </footer>
+</html>
+
+<!-- palette: #37abb5 #f77189 #9fa647 #477ba6 -->

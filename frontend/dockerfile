@@ -1,0 +1,15 @@
+# builds a docker image of the app's static frontend
+
+FROM node:latest
+
+# create app directory
+WORKDIR /plca-staticfe
+
+# send the frontend source to the image
+COPY . .
+
+# install node packages in /plca-staticfe/node_modules
+RUN npm install
+
+# build frontend to /plca-staticfe/dist
+ENTRYPOINT /bin/sh && cd /plca-staticfe && npm run build

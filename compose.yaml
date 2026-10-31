@@ -1,0 +1,54 @@
+name: prisma
+
+services:
+
+    plca-build-fe:
+        container_name: plca-build-fe
+        build:
+            context: ./frontend/
+            dockerfile: ./dockerfile
+        volumes:
+            - "plca-static-fe:/plca-staticfe/dist"
+
+    plca-host-fe:
+        container_name: plca-host-fe
+        image: nginx
+        depends_on:
+            plca-build-fe:
+                condition: service_completed_successfully
+        networks:
+            plca: {}
+        ports:
+            - '81:80'
+        volumes:
+            - "plca-static-fe:/usr/share/nginx/html"
+        restart: unless-stopped
+
+    plca-build-be:
+        container_name: plca-build-be
+        image: plca-build-be
+        build:
+            context: ./scenariobuilder/
+            dockerfile: ./dockerfile
+        volumes:
+            - "plca-scenariodata:/root/.local/share/Brightway3"
+
+    plca-host-be:
+        container_name: plca-host-be
+        build:
+            context: ./backend/
+            dockerfile: ./dockerfile
+        networks:
+            plca: {}
+        volumes:
+            - "plca-scenariodata:/root/.local/share/Brightway3"
+            - "./backend/logs:/plca-dir/logs"
+        restart: unless-stopped
+
+networks:
+    plca:
+        name: "plca"
+
+volumes:
+    plca-static-fe:
+    plca-scenariodata:

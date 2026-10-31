@@ -1,0 +1,25 @@
+FROM continuumio/miniconda3:26.3.2-2
+
+# create app directory
+WORKDIR /plca-dir
+
+# copy source files
+COPY . .
+
+# install 7z and unpack EI datasets
+RUN apt-get update \
+    && apt-get install -y p7zip-full \
+    && ./extract-ei-archives.sh
+
+# install mamba
+RUN conda install -n base conda-libmamba-solver && conda config --set solver libmamba
+
+# setup the environment
+RUN conda env create -f ./plca-env.yaml
+SHELL ["conda", "run", "-n", "plca-env", "/bin/bash", "-c" ]
+
+# build datasets
+RUN python buildScenarios.py
+
+# on container start - log into bash
+ENTRYPOINT ["/bin/bash"]

@@ -1,0 +1,23 @@
+FROM continuumio/miniconda3:26.3.2-2
+
+# create app directory
+WORKDIR /plca-dir
+
+# copy (some) source files
+COPY ./env-be.yaml .
+COPY ./app.py .
+COPY ./lcautils.py .
+COPY ./gunicorn.conf.py .
+
+# install mamba
+RUN conda install -n base conda-libmamba-solver && conda config --set solver libmamba
+
+# setup the environment
+RUN conda env create -f ./env-be.yaml
+SHELL ["conda", "run", "-n", "plca-env", "/bin/bash", "-c" ]
+
+# open up the port
+EXPOSE 5000
+
+# host the prod backend server
+ENTRYPOINT gunicorn app:app
