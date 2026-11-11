@@ -9,7 +9,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,
+    resources={r"/*": {"origins": ["http://127.0.0.1:81"]}},
+)
 
 @app.before_request
 def start_timer():

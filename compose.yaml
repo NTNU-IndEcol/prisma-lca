@@ -26,7 +26,6 @@ services:
 
     plca-build-be:
         container_name: plca-build-be
-        image: plca-build-be
         build:
             context: ./scenariobuilder/
             dockerfile: ./dockerfile
@@ -40,6 +39,8 @@ services:
             dockerfile: ./dockerfile
         networks:
             plca: {}
+        ports:
+            - '5000:5000'
         volumes:
             - "plca-scenariodata:/root/.local/share/Brightway3"
             - "./backend/logs:/plca-dir/logs"
